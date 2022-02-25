@@ -1,0 +1,6 @@
+bs4
+pillow
+quart
+python-resize-image
+Wand
+aiohttp
