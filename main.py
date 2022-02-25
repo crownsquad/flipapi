@@ -1,7 +1,7 @@
 import importlib
 import os
 
-from quart import Quart, render_template, jsonify
+from quart import Quart, render_template, jsonify, abort, request
 
 
 api_keys = os.getenv('API_KEYS', 'uwu').split(',')
@@ -16,6 +16,18 @@ for file in os.listdir('render'):
     if file.endswith('.py'):
         lib = importlib.import_module(f"render.{file[:-3]}")
         app.register_blueprint(getattr(lib, 'blueprint'))
+
+@app.before_request
+async def before():
+    # check for a blueprint, makes sure we have a route
+    if request.blueprint is not None and request.path not in no_auth_paths:
+        if 'Authorization' not in request.headers:
+            abort(jsonify({ 'Error': 'Not Authorized'}))
+            return
+        auth_header = request.headers.get('Authorization')
+
+        if auth_header not in api_keys:
+            abort(jsonify({ 'Error': 'Token not valid'}))
 
 
 @app.route('/')

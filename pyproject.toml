@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "repl_python3_flipapi"
+version = "0.1.0"
+description = ""
+authors = ["BulzyKrown <<>>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+bs4 = "^0.0.1"
+quart = "^0.16.3"
+Wand = "^0.6.7"
+aiohttp = "^3.8.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
